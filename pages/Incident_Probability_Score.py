@@ -92,12 +92,12 @@ start_date = st.sidebar.date_input("Start Date", value=today - timedelta(days = 
 end_date = st.sidebar.date_input("End Date", value=today, min_value = start_date, max_value=today)
 
 if end_date > today or start_date <= start_time:
-    st.markdown("<h3 style='color: red;'>You cannot select a previous date before six months or future date.</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: red;'>You cannot select a previous date before six months or a future date.</h3>", unsafe_allow_html=True)
 else:
-    st.markdown(f"<h4 style='color: blue;'>Showing data up to the current date: {end_date}</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='color: blue;'>Showing data up until the current date: {end_date}</h4>", unsafe_allow_html=True)
 
 # Selecionar a hora e minuto para o tempo final
-    end_time = st.sidebar.time_input("Select End Time (related to end date)", 
+    end_time = st.sidebar.time_input("Select the End Time (related to end date)", 
                                     value=df_tested_data.index.max().time())
     # end_time = st.sidebar.time_input("Select End Time (related to end date)", value=date_now.time())
 
@@ -105,7 +105,7 @@ else:
     end_datetime = pd.to_datetime(f"{end_date} {end_time}")
 
     # Definir um intervalo de tempo que o usuário deseja visualizar (em minutos)
-    time_window_minutes = st.sidebar.slider("Select Time Window (in minutes)", 0, 1440, 60)  # Máximo de 24 horas
+    time_window_minutes = st.sidebar.slider("Select the Time Window (in minutes)", 0, 1440, 60)  # Máximo de 24 horas
 
     # datetime interval for the calculate of metrics (big numbers view)
     start_datetime_metrics = pd.to_datetime(f"{start_date} {df_tested_data[start_date:start_date].index.min().time()}")
@@ -118,7 +118,7 @@ else:
 
     # filtered_data = df_tested_data.loc[start_date:end_date]
     if len(filtered_data)==0:
-        st.warning("there are no data on this time period!")
+        st.warning("There are no data on this time period!")
 
     # Calcular e exibir as métricas de anomalia para o intervalo selecionado
     anomaly_stats = anomaly_metrics(df_tested_data, start_time=start_datetime_metrics, end_time=end_datetime)

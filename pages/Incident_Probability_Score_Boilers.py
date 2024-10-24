@@ -84,14 +84,14 @@ start_date = st.sidebar.date_input("Start Date", value=today - timedelta(days = 
 end_date = st.sidebar.date_input("End Date", value=today, min_value = start_date, max_value=today)
 
 if end_date > today or start_date <= start_time:
-    st.markdown("<h3 style='color: red;'>You cannot select a previous date before six months or future date.</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: red;'>You cannot select a previous date before six months or a future date.</h3>", unsafe_allow_html=True)
 else:
-    st.markdown(f"<h4 style='color: blue;'>Showing data up to the current date: {end_date}</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='color: blue;'>Showing data up until the current date: {end_date}</h4>", unsafe_allow_html=True)
 
     # chose interval time by user (max of 24hs)
-    end_time = st.sidebar.time_input("Select End Time (related to end date)", 
+    end_time = st.sidebar.time_input("Select the End Time (related to end date)", 
                                     value=df_tested_data.index.max().time())
-    time_window_hours = st.sidebar.slider("Select Time Window (in hours)", 0, 24, 1)
+    time_window_hours = st.sidebar.slider("Select the Time Window (in hours)", 0, 24, 1)
 
     # datetime interval for the calculate of metrics (big numbers view)
     start_datetime_metrics = pd.to_datetime(f"{start_date} {df_tested_data[start_date:start_date].index.min().time()}")
@@ -107,7 +107,7 @@ else:
     filtered_data_anom = filtered_data[[col for col in filtered_data if "anomaly" in col.lower()]]
 
     if len(filtered_data)==0:
-        st.warning("there are no data in this period")
+        st.warning("There are no data in this period")
 
     # select the boiler
     selected_column = st.sidebar.selectbox(
